@@ -18,12 +18,22 @@ app.intent('Word', async(conv: DialogflowConversation) => {
     return
   }
 
+  if (!(word in wordMap)) {
+    // TODO: slackに通知する
+    conv.ask(`すいません、「${word}」はわかりませんでした。`)
+    conv.ask('他に知りたい単語をどうぞ。')
+
+    return
+  }
+
   conv.ask(wordMap[word])
-  conv.ask('他に知りたい単語をどうぞ')
+  conv.ask('他に知りたい単語をどうぞ。')
 })
 
 app.intent('Fallback', async(conv: DialogflowConversation) => {
+  // TODO: slackに通知する
   conv.ask(`すいません、「${conv.query}」はわかりませんでした。`)
+  conv.ask('他に知りたい単語をどうぞ。')
 })
 
 exports.fulfillment = https.onRequest(app)
