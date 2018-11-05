@@ -22,7 +22,6 @@ app.intent('Word', async(conv: DialogflowConversation) => {
   }
 
   if (!(word in wordMap)) {
-    // TODO: slackに通知する
     conv.ask(`すいません、「${word}」はわかりませんでした。`)
     conv.ask('他に知りたい単語をどうぞ。')
     sendMessage(`データにだけ存在しないワードが渡されました: \`${word}\``)
