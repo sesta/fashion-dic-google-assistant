@@ -34,6 +34,14 @@ app.intent('Word', async(conv: DialogflowConversation) => {
 })
 
 app.intent('Fallback', async(conv: DialogflowConversation) => {
+  // entityに登録されていない状態でも救えるようにする
+  if (conv.query in wordMap) {
+    conv.ask(wordMap[conv.query])
+    conv.ask('他に知りたい単語をどうぞ')
+
+    return
+  }
+
   conv.ask(`すいません、「${conv.query}」はわかりませんでした。`)
   conv.ask('他に知りたい単語をどうぞ。')
   sendMessage(`知らない単語が渡されました: \n\`\`\`\n${conv.query}\n\`\`\``)
